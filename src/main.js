@@ -1,10 +1,12 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import vuetify from './plugins/vuetify' // Import Vuetify
-import '@mdi/font/css/materialdesignicons.css' // If you want Material Design Icons
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import { createVuetify } from 'vuetify';
+import 'vuetify/styles';
 
-const app = createApp(App)
+const vuetify = createVuetify();
 
-app.use(vuetify) // Use Vuetify
-
-app.mount('#app')
+createApp(App)
+    .use(router)
+    .use(vuetify)
+    .mount('#app');
