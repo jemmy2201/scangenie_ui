@@ -20,7 +20,7 @@
         <v-icon left>mdi-cogs</v-icon>
         Settings
       </v-btn>
-      <v-btn text to="/profile" @click="goToProfile">
+      <v-btn text to="/profiles" @click="goToProfile">
         <v-icon left>mdi-account-circle</v-icon>
         Profile
       </v-btn>
