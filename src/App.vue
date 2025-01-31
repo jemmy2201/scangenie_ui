@@ -1,32 +1,32 @@
 <template>
   <v-app>
-    <!-- App Bar (Top Menu) -->
-    <v-app-bar app color="indigo darken-2" dark elevate-on-scroll>
+    <!-- App Bar -->
+    <v-app-bar app color="#1E2A47" dark elevate-on-scroll>
       <v-toolbar-title class="d-flex align-center">
-        <v-icon>mdi-rocket-launch</v-icon>
-        <span class="ml-2">Sigma2k</span>
+        <v-icon>mdi-cloud</v-icon>
+        <span class="ml-2" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FF5722;">Sigma2k</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <!-- Navigation Buttons in App Bar -->
-      <v-btn text to="/" @click="goToDashboard">
-        <v-icon left>mdi-home</v-icon>
+      <!-- Navigation Buttons -->
+      <v-btn text to="/" @click="goToDashboard" class="nav-btn">
+        <v-icon left>mdi-view-dashboard</v-icon>
         Dashboard
       </v-btn>
-      <v-btn text to="/reports" @click="goToReports">
-        <v-icon left>mdi-file-document</v-icon>
-        Reports
+      <v-btn text to="/reports" @click="goToServices" class="nav-btn">
+        <v-icon left>mdi-cloud-outline</v-icon>
+        Services
       </v-btn>
-      <v-btn text to="/settings" @click="goToSettings">
+      <v-btn text to="/profiles" @click="goToAnalytics" class="nav-btn">
+        <v-icon left>mdi-chart-line</v-icon>
+        Analytics
+      </v-btn>
+      <v-btn text to="/settings" @click="goToSettings" class="nav-btn">
         <v-icon left>mdi-cogs</v-icon>
         Settings
       </v-btn>
-      <v-btn text to="/profiles" @click="goToProfile">
-        <v-icon left>mdi-account-circle</v-icon>
-        Profile
-      </v-btn>
     </v-app-bar>
 
-    <!-- Main Content Area -->
+    <!-- Main Content -->
     <v-main>
       <v-container fluid>
         <router-view />
@@ -36,79 +36,76 @@
     <!-- Footer -->
     <v-footer app>
       <v-col class="text-center" cols="12">
-        <span class="text-h6">© 2025 Sigma2k. All Rights Reserved.</span>
+        <span style="font-family: 'Roboto', sans-serif; font-size: 14px; color: #B0BEC5;">© 2025 CloudTech. All Rights Reserved.</span>
       </v-col>
     </v-footer>
   </v-app>
 </template>
 
 <script setup>
-  // Import necessary components from Vuetify and Vue Router
-  import { VApp, VAppBar, VToolbarTitle, VSpacer, VIcon, VMain, VContainer, VFooter, VBtn, VCol } from 'vuetify/components';
-  import { useRouter } from 'vue-router'; // Import useRouter
+  import { VApp, VAppBar, VToolbarTitle, VSpacer, VIcon, VMain, VContainer, VFooter, VCol, VBtn } from 'vuetify/components';
+  import { useRouter } from 'vue-router';
 
-  // Access the Vue Router instance
   const router = useRouter();
 
-  // Define methods for navigation
   const goToDashboard = () => {
     router.push('/');
   };
 
-  const goToReports = () => {
+  const goToServices = () => {
     router.push('/reports');
+  };
+
+  const goToAnalytics = () => {
+    router.push('/profiles');
   };
 
   const goToSettings = () => {
     router.push('/settings');
   };
-
-  const goToProfile = () => {
-    router.push('/profiles');
-  };
 </script>
 
 <style scoped>
-  /* App Bar */
+  /* Importing Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
+
+  /* App Bar Styling */
   .v-app-bar {
-    background-color: #1E1E2D; /* Darker shade of blue for a modern, professional feel */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow for elevation */
+    background-color: #1E2A47; /* Deep Blue for cloud tech look */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Slight shadow for professionalism */
   }
 
-  /* Buttons and Icons Styling */
+  /* Buttons Styling */
   .v-btn {
-    color: #E5E5E5; /* Light color for text in buttons */
+    color: #E5E5E5;
     transition: color 0.3s ease-in-out;
     font-size: 16px;
     font-weight: 500;
+    font-family: 'Roboto', sans-serif;
   }
 
+  /* Hover Effect */
   .v-btn:hover {
-    color: #FF4081; /* Bright accent color when hovering over buttons */
+    color: #FF5722; /* Orange highlight for hover effect */
   }
 
-  /* Icon Styling */
-  .v-icon {
-    font-size: 18px;
-    color: inherit; /* Inherit button color for uniform styling */
-  }
-
-  /* Active Tab Style */
+  /* Active Button */
   .v-btn--active {
-    background-color: #FF4081 !important; /* Active tab has a strong highlight */
+    background-color: #FF5722 !important;
     color: white !important;
-    border-radius: 12px; /* Smooth rounded edges for active button */
+    border-radius: 8px; /* Rounded active buttons for modern touch */
   }
 
-  /* Footer Style */
+  /* Footer Styling */
   .v-footer {
     background-color: #37474F;
-    color: #FFEB3B;
+    color: #B0BEC5;
     padding: 20px 0;
   }
 
-  /* Responsive Design */
-  .d-none.d-sm-inline {
-    display: inline-block;
+  .v-footer span {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #B0BEC5;
   }
 </style>
