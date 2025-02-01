@@ -23,3 +23,10 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 "# sigma2k_ui" 
+
+### Untuk update di docker 
+```
+1. npm run build
+2. docker-compose up -d --build
+
+```
