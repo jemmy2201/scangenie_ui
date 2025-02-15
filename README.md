@@ -29,4 +29,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 1. npm run build
 2. docker-compose up -d --build
 
+#masuk ke terminal docker
+docker exec -it scangenie_ui sh
 ```

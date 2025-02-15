@@ -1,11 +1,11 @@
 services:
   nginx:
     image: nginx:alpine
-    container_name: sigma2k_ui
+    container_name: scangenie_ui_nginx
     ports:
       - "82:80"
     volumes:
-      - ./nginx-sigma2k_ui.conf:/etc/nginx/nginx.conf
+      - ./nginx-scangenie_ui.conf:/etc/nginx/nginx.conf
       - ./:/var/www  # Mount the dist folder from your local machine to the container
     depends_on:
       - nodejs
@@ -15,7 +15,7 @@ services:
 
   nodejs:
     image: node:16-alpine
-    container_name: Sigma2k_ui
+    container_name: scangenie_ui
     working_dir: /var/www
     volumes:
       - ./:/var/www
