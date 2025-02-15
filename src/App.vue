@@ -1,28 +1,51 @@
 <template>
   <v-app>
     <!-- App Bar -->
-    <v-app-bar app color="#1E2A47" dark elevate-on-scroll>
+    <v-app-bar app color="white" dark  elevation="0">
+      <v-spacer></v-spacer>
+      <!-- Navigation Buttons -->
+      <v-btn text to="" @click="goToAnalytics" class="nav-btn">
+        <v-btn icon class="social-btn">
+          <v-icon>mdi-facebook</v-icon>
+        </v-btn>
+        <v-btn icon class="social-btn">
+          <v-icon>mdi-youtube</v-icon>
+        </v-btn>
+        <v-btn icon class="social-btn">
+          <v-icon>mdi-vimeo</v-icon>
+        </v-btn>
+      </v-btn>
+      <v-btn text to="" @click="goToSettings" class="nav-btn partners_login">
+        Partners Login
+      </v-btn>
+      <v-btn text to="" @click="goToSettings" class="nav-btn login_btn">
+        <v-icon left>mdi-login</v-icon>
+        Login
+      </v-btn>
+    </v-app-bar>
+    <v-app-bar app color="white" dark  elevation="0">
       <v-toolbar-title class="d-flex align-center">
-        <v-icon>mdi-cloud</v-icon>
-        <span class="ml-2" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FF5722;">Sigma2k</span>
+        <span class="ml-2" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FF5722;">ScanGenie</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- Navigation Buttons -->
       <v-btn text to="/" @click="goToDashboard" class="nav-btn">
-        <v-icon left>mdi-view-dashboard</v-icon>
-        Dashboard
+        <v-icon left>mdi-home</v-icon>
+      </v-btn>
+      <v-btn text to="/about" @click="goToDashboard" class="nav-btn">
+        About Us
       </v-btn>
       <v-btn text to="/reports" @click="goToServices" class="nav-btn">
-        <v-icon left>mdi-cloud-outline</v-icon>
-        Services
+        Software
       </v-btn>
       <v-btn text to="/profiles" @click="goToAnalytics" class="nav-btn">
-        <v-icon left>mdi-chart-line</v-icon>
-        Analytics
+        Courses
       </v-btn>
       <v-btn text to="/settings" @click="goToSettings" class="nav-btn">
-        <v-icon left>mdi-cogs</v-icon>
-        Settings
+        Support
+      </v-btn>
+      <v-btn text to="" @click="goToSettings" class="nav-btn">
+        Contact
       </v-btn>
     </v-app-bar>
 
@@ -34,9 +57,9 @@
     </v-main>
 
     <!-- Footer -->
-    <v-footer app>
+    <v-footer app color="white">
       <v-col class="text-center" cols="12">
-        <span style="font-family: 'Roboto', sans-serif; font-size: 14px; color: #B0BEC5;">© 2025 CloudTech. All Rights Reserved.</span>
+        <span style="font-family: 'Roboto', sans-serif; font-size: 14px; color: #B0BEC5;">© 2025 ScanGenie. All Rights Reserved.</span>
       </v-col>
     </v-footer>
   </v-app>
@@ -77,13 +100,26 @@
 
   /* Buttons Styling */
   .v-btn {
-    color: #E5E5E5;
-    transition: color 0.3s ease-in-out;
-    font-size: 16px;
-    font-weight: 500;
-    font-family: 'Roboto', sans-serif;
+    color: #141414;
+    text-transform: none;
+    font-size: 11px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .social-btn {
+    background-color: #ffffff; /* Warna latar belakang putih */
+    border-radius: 50%; /* Membuat tombol berbentuk bulat */
+    width: 40px; /* Ukuran tombol */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Efek bayangan */
+    transition: background-color 0.3s ease-in-out;
   }
 
+  .social-btn:hover {
+    background-color: #f1f1f1; /* Warna saat hover */
+  }
   /* Hover Effect */
   .v-btn:hover {
     color: #FF5722; /* Orange highlight for hover effect */
@@ -95,7 +131,15 @@
     color: white !important;
     border-radius: 8px; /* Rounded active buttons for modern touch */
   }
-
+  .partners_login {
+    background-color: #FF5722 !important;
+    color: white !important;
+    border-radius: 8px; /* Rounded active buttons for modern touch */
+  }
+  .login_btn {
+    color: #FF5722 !important;
+    border-radius: 8px; /* Rounded active buttons for modern touch */
+  }
   /* Footer Styling */
   .v-footer {
     background-color: #37474F;
