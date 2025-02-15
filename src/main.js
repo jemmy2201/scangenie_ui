@@ -6,6 +6,7 @@ import vuetify from './plugins/vuetify'; // Pastikan Vuetify diimpor
 // 🔹 Import Vuetify
 import { createVuetify } from 'vuetify';
 import 'vuetify/styles';
+import '@/assets/styles.css';
 
 // 🔹 Import Material Design Icons
 import '@mdi/font/css/materialdesignicons.css';

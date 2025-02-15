@@ -169,17 +169,6 @@
   .social-btn:hover {
     background-color: #f1f1f1; /* Warna saat hover */
   }
-  /* Hover Effect */
-  .v-btn:hover {
-    color: #FF5722; /* Orange highlight for hover effect */
-  }
-
-  /* Active Button */
-  .v-btn--active {
-    background-color: #FF5722 !important;
-    color: white !important;
-    border-radius: 8px; /* Rounded active buttons for modern touch */
-  }
   .partners_login {
     background-color: #FF5722 !important;
     color: white !important;

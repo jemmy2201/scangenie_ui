@@ -1,0 +1,11 @@
+/* Hover Effect */
+.v-btn:hover {
+    color: #FF5722 !important; /* Orange highlight for hover effect */
+}
+
+/* Active Button */
+.v-btn--active {
+    background-color: #FF5722 !important;
+    color: white !important;
+    border-radius: 8px !important; /* Rounded active buttons for modern touch */
+}
