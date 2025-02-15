@@ -1,7 +1,32 @@
 <template>
   <v-app>
-    <!-- App Bar -->
-    <v-app-bar app color="white" dark  elevation="0">
+    <!-- Mobile Navigation -->
+    <v-app-bar v-if="isMobile" app color="white" dark elevation="0">
+      <v-btn icon @click="toggleDrawer">
+        <v-icon>mdi-menu</v-icon>
+      </v-btn>
+      <v-toolbar-title>
+        <span class="ml-2" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FF5722;">ScanGenie</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+    </v-app-bar>
+
+    <!-- Sidebar Drawer -->
+    <v-navigation-drawer v-model="drawer" app temporary absolute>
+      <v-list>
+        <v-list-item @click="goToDashboard">
+          <v-icon left>mdi-home</v-icon> Dashboard
+        </v-list-item>
+        <v-list-item @click="goToDashboard">About Us</v-list-item>
+        <v-list-item @click="goToServices">Software</v-list-item>
+        <v-list-item @click="goToAnalytics">Courses</v-list-item>
+        <v-list-item @click="goToSettings">Support</v-list-item>
+        <v-list-item @click="goToSettings">Contact</v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <!-- App Bar for Desktop -->
+    <v-app-bar v-if="!isMobile" app color="white" dark  elevation="0">
       <v-spacer></v-spacer>
       <!-- Navigation Buttons -->
       <v-btn text to="" @click="goToAnalytics" class="nav-btn">
@@ -18,17 +43,16 @@
       <v-btn text to="" @click="goToSettings" class="nav-btn partners_login">
         Partners Login
       </v-btn>
-      <v-btn text to="" @click="goToSettings" class="nav-btn login_btn">
+      <v-btn text  @click="goToLogin" class="nav-btn login_btn">
         <v-icon left>mdi-login</v-icon>
         Login
       </v-btn>
     </v-app-bar>
-    <v-app-bar app color="white" dark  elevation="0">
+    <v-app-bar v-if="!isMobile" app color="white" dark elevation="0">
       <v-toolbar-title class="d-flex align-center">
         <span class="ml-2" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FF5722;">ScanGenie</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <!-- Navigation Buttons -->
       <v-btn text to="/" @click="goToDashboard" class="nav-btn">
         <v-icon left>mdi-home</v-icon>
       </v-btn>
@@ -68,9 +92,29 @@
 <script setup>
   import { VApp, VAppBar, VToolbarTitle, VSpacer, VIcon, VMain, VContainer, VFooter, VCol, VBtn } from 'vuetify/components';
   import { useRouter } from 'vue-router';
-
+  import { ref, onMounted, watch } from 'vue';
   const router = useRouter();
+  const drawer = ref(false);
+  const isMobile = ref(window.innerWidth <= 768);
 
+  const checkScreenSize = () => {
+    isMobile.value = window.innerWidth <= 768;
+  };
+
+  const toggleDrawer = () => {
+    drawer.value = !drawer.value;
+    console.log("Drawer state:", drawer.value); // Debugging
+  };
+
+  // Pantau perubahan nilai drawer
+  watch(drawer, (newVal) => {
+    console.log("Drawer changed:", newVal);
+  });
+
+  onMounted(() => {
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+  });
   const goToDashboard = () => {
     router.push('/');
   };
@@ -86,12 +130,17 @@
   const goToSettings = () => {
     router.push('/settings');
   };
+  const goToLogin = () => {
+    router.push('/UserLogin');
+  };
 </script>
 
 <style scoped>
   /* Importing Fonts */
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
-
+  .v-navigation-drawer {
+    z-index: 1500 !important; /* Pastikan drawer tampil di atas elemen lain */
+  }
   /* App Bar Styling */
   .v-app-bar {
     background-color: #1E2A47; /* Deep Blue for cloud tech look */
