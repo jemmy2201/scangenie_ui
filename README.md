@@ -32,3 +32,14 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 #masuk ke terminal docker
 docker exec -it scangenie_ui sh
 ```
+
+## cara push image ke docker hub
+1. npm run build
+2. docker login
+3. docker ps -a
+4. docker commit <container_id> mydockerhub/scangenie_ui:v1
+5. docker build -t mydockerhub/scangenie_ui:v1 .
+6. docker push mydockerhub/scangenie_ui:v1
+
+
+

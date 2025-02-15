@@ -19,6 +19,7 @@ services:
     working_dir: /var/www
     volumes:
       - ./:/var/www
+      - /var/www/node_modules  # Hindari overwrite node_modules
     command: ["npm", "run", "serve"]
     restart: always
     networks:
