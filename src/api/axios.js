@@ -3,7 +3,7 @@ import axios from 'axios'
 const baseURL =
     window.location.hostname === 'localhost'
         ? 'http://localhost:8000/api' // Jika diakses secara lokal
-        : 'https://api.scangenie.million-cloud.com' // Jika diakses dari server
+        : 'https://api.scangenie.million-cloud.com/api' // Jika diakses dari server
 
 const api = axios.create({
     baseURL,
