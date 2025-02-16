@@ -1,8 +1,13 @@
 import axios from 'axios'
 
+const baseURL =
+    window.location.hostname === 'localhost'
+        ? 'http://localhost:8000/api' // Jika diakses secara lokal
+        : 'https://api.scangenie.million-cloud.com' // Jika diakses dari server
+
 const api = axios.create({
-    baseURL: 'http://localhost:83/api', // Ganti dengan URL API kamu
-    timeout: 10000, // Timeout request (opsional)
+    baseURL,
+    timeout: 10000,
     headers: {
         'Content-Type': 'application/json'
     }

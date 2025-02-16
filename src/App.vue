@@ -29,49 +29,49 @@
     <v-app-bar v-if="!isMobile" app color="white" dark  elevation="0">
       <v-spacer></v-spacer>
       <!-- Navigation Buttons -->
-      <v-btn text to="" @click="goToAnalytics" class="nav-btn">
-        <v-btn icon class="social-btn">
-          <v-icon>mdi-facebook</v-icon>
-        </v-btn>
-        <v-btn icon class="social-btn">
-          <v-icon>mdi-youtube</v-icon>
-        </v-btn>
-        <v-btn icon class="social-btn">
-          <v-icon>mdi-vimeo</v-icon>
-        </v-btn>
-      </v-btn>
-      <v-btn text to="" @click="goToSettings" class="nav-btn partners_login">
-        Partners Login
-      </v-btn>
+<!--      <v-btn text to="" @click="goToAnalytics" class="nav-btn">-->
+<!--        <v-btn icon class="social-btn">-->
+<!--          <v-icon>mdi-facebook</v-icon>-->
+<!--        </v-btn>-->
+<!--        <v-btn icon class="social-btn">-->
+<!--          <v-icon>mdi-youtube</v-icon>-->
+<!--        </v-btn>-->
+<!--        <v-btn icon class="social-btn">-->
+<!--          <v-icon>mdi-vimeo</v-icon>-->
+<!--        </v-btn>-->
+<!--      </v-btn>-->
+<!--      <v-btn text to="" @click="goToSettings" class="nav-btn partners_login">-->
+<!--        Partners Login-->
+<!--      </v-btn>-->
       <v-btn text  @click="goToLogin" class="nav-btn login_btn">
         <v-icon left>mdi-login</v-icon>
         Login
       </v-btn>
     </v-app-bar>
-    <v-app-bar v-if="!isMobile" app color="white" dark elevation="0">
-      <v-toolbar-title class="d-flex align-center">
-        <span class="ml-2" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FF5722;">ScanGenie</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn text to="/" @click="goToDashboard" class="nav-btn">
-        <v-icon left>mdi-home</v-icon>
-      </v-btn>
-      <v-btn text to="/about" @click="goToDashboard" class="nav-btn">
-        About Us
-      </v-btn>
-      <v-btn text to="/reports" @click="goToServices" class="nav-btn">
-        Software
-      </v-btn>
-      <v-btn text to="/profiles" @click="goToAnalytics" class="nav-btn">
-        Courses
-      </v-btn>
-      <v-btn text to="/settings" @click="goToSettings" class="nav-btn">
-        Support
-      </v-btn>
-      <v-btn text to="" @click="goToSettings" class="nav-btn">
-        Contact
-      </v-btn>
-    </v-app-bar>
+<!--    <v-app-bar v-if="!isMobile" app color="white" dark elevation="0">-->
+<!--      <v-toolbar-title class="d-flex align-center">-->
+<!--        <span class="ml-2" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FF5722;">ScanGenie</span>-->
+<!--      </v-toolbar-title>-->
+<!--      <v-spacer></v-spacer>-->
+<!--      <v-btn text to="/" @click="goToDashboard" class="nav-btn">-->
+<!--        <v-icon left>mdi-home</v-icon>-->
+<!--      </v-btn>-->
+<!--      <v-btn text to="/about" @click="goToDashboard" class="nav-btn">-->
+<!--        About Us-->
+<!--      </v-btn>-->
+<!--      <v-btn text to="/reports" @click="goToServices" class="nav-btn">-->
+<!--        Software-->
+<!--      </v-btn>-->
+<!--      <v-btn text to="/profiles" @click="goToAnalytics" class="nav-btn">-->
+<!--        Courses-->
+<!--      </v-btn>-->
+<!--      <v-btn text to="/settings" @click="goToSettings" class="nav-btn">-->
+<!--        Support-->
+<!--      </v-btn>-->
+<!--      <v-btn text to="" @click="goToSettings" class="nav-btn">-->
+<!--        Contact-->
+<!--      </v-btn>-->
+<!--    </v-app-bar>-->
 
     <!-- Main Content -->
     <v-main>
@@ -131,7 +131,7 @@
     router.push('/settings');
   };
   const goToLogin = () => {
-    router.push('/UserLogin');
+    router.push('/');
   };
 </script>
 

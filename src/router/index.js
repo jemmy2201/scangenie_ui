@@ -6,8 +6,8 @@ import Profiles from '../views/ProfilePage.vue';
 import UserLogin from '../views/FormLogin.vue';
 
 const routes = [
-    { path: '/', component: DashboardPage  },
-    { path: '/UserLogin', component: UserLogin },
+    { path: '/', component: UserLogin  },
+    { path: '/dashboardPage', component: DashboardPage },
     { path: '/reports', component: Reports },
     { path: '/settings', component: Settings },
     { path: '/profiles', component: Profiles },

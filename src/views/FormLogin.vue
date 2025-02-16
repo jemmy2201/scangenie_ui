@@ -1,5 +1,5 @@
 <script setup>
-    import {  VAlert, VBtn,VForm, VTextField,VCardTitle,VCard,VContainer,VCardText } from 'vuetify/components'
+    import {  VAlert, VBtn,VForm, VTextField,VCardTitle,VCard,VContainer,VCardText,VImg} from 'vuetify/components'
     import api from '@/api/axios' // Gunakan Axios global
     import { ref } from 'vue'
     import { useRouter } from 'vue-router'
@@ -27,7 +27,7 @@
             localStorage.setItem('token', response.data.token)
 
             // Redirect ke halaman dashboard
-            router.push('/')
+            router.push('/dashboardPage')
         } catch (error) {
             errorMessage.value = 'Email atau password salah!'
         } finally {
@@ -37,6 +37,7 @@
 </script>
 
 <template>
+    <v-img src="/image/logo.jpg" alt="Logo" max-height="80" max-width="200" class="mx-auto mb-4"></v-img>
         <v-container class="fill-height d-flex justify-center align-center">
             <v-card class="login-card" elevation="10">
                 <v-card-title class="text-center text-h5 font-weight-bold">
