@@ -29,7 +29,7 @@
             // Redirect ke halaman dashboard
             router.push('/dashboardPage')
         } catch (error) {
-            errorMessage.value = 'Email atau password salah!'
+            errorMessage.value = 'Incorrect email or password!'
         } finally {
             loading.value = false
         }
