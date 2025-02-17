@@ -22,29 +22,40 @@
             const response = await api.post('/login', {
                 email: email.value,
                 password: password.value
-            })
+            });
 
-            // Simpan token ke localStorage (jika API mengembalikan token)
-            localStorage.setItem('token', response.data.token)
+            if (response.data.success) {
+                const user = response.data.user;
+                const token = response.data.token;
 
-            // Redirect ke halaman dashboard
-            router.push('/dashboardPage')
+                // Simpan token & user ke localStorage
+                localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(user));
+
+                // Redirect berdasarkan role
+                if (user.role === 'admin') {
+                    router.push('/dashboardPage');
+                } else if (user.role === 'user') {
+                    router.push('/dashboardPage'); // User hanya bisa ke dashboard
+                }
+            }
         } catch (error) {
             if (error.response && error.response.data) {
-                const responseData = error.response.data
+                const responseData = error.response.data;
                 if (responseData.errors) {
                     // Simpan error validasi ke variabel state
-                    validationErrors.value = responseData.errors
+                    validationErrors.value = responseData.errors;
                 } else {
-                    errorMessage.value = responseData.message || 'Login failed!'
+                    errorMessage.value = responseData.message || 'Login failed!';
                 }
             } else {
-                errorMessage.value = 'Something went wrong, please try again later.'
+                errorMessage.value = 'An error occurred, please try again later.';
             }
         } finally {
-            loading.value = false
+            loading.value = false;
         }
-    }
+    };
+
     const goToRegister = () => {
       router.push('/register');
     };
