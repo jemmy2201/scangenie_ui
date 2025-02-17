@@ -37,9 +37,9 @@ docker exec -it scangenie_ui sh
 1. npm run build
 2. docker login
 3. docker ps -a
-4. docker commit <container_id> jemmy22/scangenie_ui:v1.3
-5. docker build -t jemmy22/scangenie_ui:v1.3 .
-6. docker push jemmy22/scangenie_ui:v1.3
+4. docker commit <container_id> jemmy22/scangenie_ui:v1.4
+5. docker build -t jemmy22/scangenie_ui:v1.4 .
+6. docker push jemmy22/scangenie_ui:v1.4
 
 
 
