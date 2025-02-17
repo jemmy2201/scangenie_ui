@@ -6,7 +6,7 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
       <v-toolbar-title>
-        <span class="ml-2" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FF5722;">ScanGenie</span>
+<!--        <span class="ml-2" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FF5722;">ScanGenie</span>-->
       </v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
@@ -15,13 +15,13 @@
     <v-navigation-drawer v-model="drawer" app temporary absolute>
       <v-list>
         <v-list-item @click="goToDashboard">
-          <v-icon left>mdi-home</v-icon> Dashboard
+<!--          <v-icon left>mdi-home</v-icon> Dashboard-->
         </v-list-item>
-        <v-list-item @click="goToDashboard">About Us</v-list-item>
-        <v-list-item @click="goToServices">Software</v-list-item>
-        <v-list-item @click="goToAnalytics">Courses</v-list-item>
-        <v-list-item @click="goToSettings">Support</v-list-item>
-        <v-list-item @click="goToSettings">Contact</v-list-item>
+<!--        <v-list-item @click="goToDashboard">About Us</v-list-item>-->
+<!--        <v-list-item @click="goToServices">Software</v-list-item>-->
+<!--        <v-list-item @click="goToAnalytics">Courses</v-list-item>-->
+<!--        <v-list-item @click="goToSettings">Support</v-list-item>-->
+<!--        <v-list-item @click="goToSettings">Contact</v-list-item>-->
       </v-list>
     </v-navigation-drawer>
 
@@ -83,7 +83,7 @@
     <!-- Footer -->
     <v-footer app color="white">
       <v-col class="text-center" cols="12">
-        <span style="font-family: 'Roboto', sans-serif; font-size: 14px; color: #B0BEC5;">© 2025 ScanGenie. All Rights Reserved.</span>
+        <span style="font-family: 'Roboto', sans-serif; font-size: 14px; color: #B0BEC5;">COPYRIGHT © {{ new Date().getFullYear() }} MILLION SOFTWARE SDN. BHD | ALL RIGHTS RESERVED.</span>
       </v-col>
     </v-footer>
   </v-app>
@@ -119,17 +119,17 @@
     router.push('/');
   };
 
-  const goToServices = () => {
-    router.push('/reports');
-  };
-
-  const goToAnalytics = () => {
-    router.push('/profiles');
-  };
-
-  const goToSettings = () => {
-    router.push('/settings');
-  };
+  // const goToServices = () => {
+  //   router.push('/reports');
+  // };
+  //
+  // const goToAnalytics = () => {
+  //   router.push('/profiles');
+  // };
+  //
+  // const goToSettings = () => {
+  //   router.push('/settings');
+  // };
   const goToLogin = () => {
     router.push('/');
   };
