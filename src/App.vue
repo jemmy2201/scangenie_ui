@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <!-- Mobile Navigation -->
-    <v-app-bar v-if="isMobile" app color="white" dark elevation="0">
+    <v-app-bar v-if="isMobile && isLoggedIn" app color="white" dark elevation="0">
       <v-btn icon @click="toggleDrawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
@@ -12,10 +12,10 @@
     </v-app-bar>
 
     <!-- Sidebar Drawer -->
-    <v-navigation-drawer v-model="drawer" app temporary absolute>
+    <v-navigation-drawer v-if="isMobile && isLoggedIn" v-model="drawer" app temporary absolute>
       <v-list>
-        <v-list-item @click="goToDashboard">
-<!--          <v-icon left>mdi-home</v-icon> Dashboard-->
+        <v-list-item @click="goToLogout">
+          <v-icon left>mdi-logout</v-icon> Logout
         </v-list-item>
 <!--        <v-list-item @click="goToDashboard">About Us</v-list-item>-->
 <!--        <v-list-item @click="goToServices">Software</v-list-item>-->
@@ -43,10 +43,14 @@
 <!--      <v-btn text to="" @click="goToSettings" class="nav-btn partners_login">-->
 <!--        Partners Login-->
 <!--      </v-btn>-->
-      <v-btn text  @click="goToLogin" class="nav-btn login_btn">
+      <v-btn text  @click="goToLogin" class="nav-btn login_btn" v-if="!isLoggedIn">
         <v-icon left>mdi-login</v-icon>
         Login
       </v-btn>
+        <v-btn text @click="goToLogout" class="nav-btn logout_btn" v-if="isLoggedIn">
+            <v-icon left>mdi-logout</v-icon>
+            Logout
+        </v-btn>
     </v-app-bar>
 <!--    <v-app-bar v-if="!isMobile" app color="white" dark elevation="0">-->
 <!--      <v-toolbar-title class="d-flex align-center">-->
@@ -96,7 +100,19 @@
   const router = useRouter();
   const drawer = ref(false);
   const isMobile = ref(window.innerWidth <= 768);
+  const isLoggedIn = ref(false); // Cek status login
 
+  // Cek apakah pengguna sudah login
+  const checkLoginStatus = () => {
+      const token = localStorage.getItem('token');
+      isLoggedIn.value = !!token;
+  };
+  const goToLogout = () => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      isLoggedIn.value = false;
+      router.push('/');
+  };
   const checkScreenSize = () => {
     isMobile.value = window.innerWidth <= 768;
   };
@@ -112,12 +128,13 @@
   });
 
   onMounted(() => {
+    checkLoginStatus();
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
   });
-  const goToDashboard = () => {
-    router.push('/');
-  };
+  // const goToDashboard = () => {
+  //   router.push('/');
+  // };
 
   // const goToServices = () => {
   //   router.push('/reports');
