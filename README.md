@@ -36,6 +36,7 @@ docker exec -it scangenie_ui sh
 ## cara push image ke docker hub
 1. npm run build
 2. docker login
+3. docker-compose up -d --build
 3. docker ps -a
 4. docker commit <container_id> jemmy22/scangenie_ui:v1.4
 5. docker build -t jemmy22/scangenie_ui:v1.4 .
