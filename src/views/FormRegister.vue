@@ -7,19 +7,21 @@
     const router = useRouter()
 
     // State untuk form login
+    const name = ref('')
     const email = ref('')
     const password = ref('')
     const loading = ref(false)
     const errorMessage = ref('')
     const validationErrors = ref({}) // Menyimpan error dari API
 
-    const login = async () => {
+    const register = async () => {
         errorMessage.value = ''
         validationErrors.value = {} // Reset error sebelum request baru
         loading.value = true
 
         try {
-            const response = await api.post('/login', {
+            const response = await api.post('/register', {
+                name: name.value,
                 email: email.value,
                 password: password.value
             })
@@ -45,8 +47,8 @@
             loading.value = false
         }
     }
-    const goToRegister = () => {
-      router.push('/register');
+    const goToLogin = () => {
+        router.push('/');
     };
 </script>
 
@@ -59,11 +61,21 @@
             </v-card-title>
 
             <v-card-title class="mt-n5 text-center text-h5 font-weight-bold">
-                Login
+                Register
             </v-card-title>
 
             <v-card-text>
-                <v-form @submit.prevent="login">
+                <v-form @submit.prevent="register">
+                    <v-text-field
+                            v-model="name"
+                            label="Name"
+                            type="name"
+                            prepend-inner-icon="mdi-account"
+                            variant="outlined"
+                            required
+                            :error-messages="validationErrors.name"
+                    ></v-text-field>
+
                     <v-text-field
                             v-model="email"
                             label="Email"
@@ -95,18 +107,18 @@
                             class="mb-4"
                             type="submit"
                     >
-                        Login
+                        Register Now
                     </v-btn>
 
                     <!-- Teks untuk Registrasi -->
-                    <v-row justify="center" class="mt-4 ml-8">
+                    <v-row justify="center" class="mt-4 ml-10">
                         <v-col class="text-center">
-                        <span class="text-black">Don't have an account?
+                        <span class="text-black">Already have an account?
                             <span
                                     style="color: blue; cursor: pointer;"
-                                    @click="goToRegister"
+                                    @click="goToLogin"
                             >
-                                REGISTER NOW
+                                LOGIN
                             </span>
                         </span>
                         </v-col>
