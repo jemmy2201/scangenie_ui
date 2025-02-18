@@ -52,17 +52,18 @@
             Logout
         </v-btn>
     </v-app-bar>
-<!--    <v-app-bar v-if="!isMobile" app color="white" dark elevation="0">-->
+    <v-app-bar v-if="!isMobile" app color="white" dark elevation="0">
 <!--      <v-toolbar-title class="d-flex align-center">-->
 <!--        <span class="ml-2" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FF5722;">ScanGenie</span>-->
 <!--      </v-toolbar-title>-->
-<!--      <v-spacer></v-spacer>-->
+      <v-spacer></v-spacer>
 <!--      <v-btn text to="/" @click="goToDashboard" class="nav-btn">-->
 <!--        <v-icon left>mdi-home</v-icon>-->
 <!--      </v-btn>-->
-<!--      <v-btn text to="/about" @click="goToDashboard" class="nav-btn">-->
-<!--        About Us-->
-<!--      </v-btn>-->
+      <v-btn text to="/upload_data" @click="goToDashboard" class="nav-btn">
+        <v-icon left>mdi-upload</v-icon>
+          Upload
+      </v-btn>
 <!--      <v-btn text to="/reports" @click="goToServices" class="nav-btn">-->
 <!--        Software-->
 <!--      </v-btn>-->
@@ -75,7 +76,7 @@
 <!--      <v-btn text to="" @click="goToSettings" class="nav-btn">-->
 <!--        Contact-->
 <!--      </v-btn>-->
-<!--    </v-app-bar>-->
+    </v-app-bar>
 
     <!-- Main Content -->
     <v-main>
