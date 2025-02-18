@@ -43,10 +43,10 @@
 <!--      <v-btn text to="" @click="goToSettings" class="nav-btn partners_login">-->
 <!--        Partners Login-->
 <!--      </v-btn>-->
-      <v-btn text  @click="goToLogin" class="nav-btn login_btn" v-if="!isLoggedIn">
-        <v-icon left>mdi-login</v-icon>
-        Login
-      </v-btn>
+<!--      <v-btn text  @click="goToLogin" class="nav-btn login_btn" v-if="!isLoggedIn">-->
+<!--        <v-icon left>mdi-login</v-icon>-->
+<!--        Login-->
+<!--      </v-btn>-->
         <v-btn text @click="goToLogout" class="nav-btn logout_btn" v-if="isLoggedIn">
             <v-icon left>mdi-logout</v-icon>
             Logout
@@ -60,10 +60,18 @@
 <!--      <v-btn text to="/" @click="goToDashboard" class="nav-btn">-->
 <!--        <v-icon left>mdi-home</v-icon>-->
 <!--      </v-btn>-->
-      <v-btn text to="/upload_data" @click="goToDashboard" class="nav-btn">
-        <v-icon left>mdi-upload</v-icon>
-          Upload
-      </v-btn>
+        <v-btn v-if="isLoggedIn" text to="/hrm/claim" class="nav-btn">
+            <v-icon left>mdi-account-group</v-icon>
+            HRM Claim
+        </v-btn>
+        <v-btn v-if="isLoggedIn" text to="/upload_data" class="nav-btn">
+            <v-icon left>mdi-upload</v-icon>
+              Upload
+        </v-btn>
+        <v-btn v-if="isLoggedIn" text to="/vendor/bill"  class="nav-btn">
+            <v-icon left>mdi-credit-card</v-icon>
+            Vendor Bill
+        </v-btn>
 <!--      <v-btn text to="/reports" @click="goToServices" class="nav-btn">-->
 <!--        Software-->
 <!--      </v-btn>-->
@@ -97,20 +105,28 @@
 <script setup>
   import { VApp, VAppBar, VToolbarTitle, VSpacer, VIcon, VMain, VContainer, VFooter, VCol, VBtn,VListItem,VList,VNavigationDrawer } from 'vuetify/components';
   import { useRouter } from 'vue-router';
-  import { ref, onMounted, watch } from 'vue';
+  import { ref, onMounted, watch, watchEffect, nextTick,} from 'vue';
   const router = useRouter();
   const drawer = ref(false);
   const isMobile = ref(window.innerWidth <= 768);
-  const isLoggedIn = ref(false); // Cek status login
+  // const isLoggedIn = ref(false);
+  import { isLoggedIn } from '@/store/auth';
+  import { setToken } from '@/store/auth';
 
   // Cek apakah pengguna sudah login
   const checkLoginStatus = () => {
-      const token = localStorage.getItem('token');
-      isLoggedIn.value = !!token;
+      isLoggedIn.value = !!localStorage.getItem('token');
   };
-  const goToLogout = () => {
-      localStorage.removeItem('token');
+  watchEffect(() => {
+      checkLoginStatus(); // Cek ulang saat state berubah
+  });
+  const goToLogout = async () => {
+      // localStorage.removeItem('token');
+      setToken('');
       localStorage.removeItem('user');
+      isLoggedIn.value = false;
+      await nextTick();
+
       isLoggedIn.value = false;
       router.push('/');
   };
@@ -137,8 +153,8 @@
   //   router.push('/');
   // };
 
-  // const goToServices = () => {
-  //   router.push('/reports');
+  // const goToUpload = () => {
+  //   router.push('/upload_data');
   // };
   //
   // const goToAnalytics = () => {
@@ -148,9 +164,9 @@
   // const goToSettings = () => {
   //   router.push('/settings');
   // };
-  const goToLogin = () => {
-    router.push('/');
-  };
+  // const goToLogin = () => {
+  //   router.push('/');
+  // };
 </script>
 
 <style scoped>

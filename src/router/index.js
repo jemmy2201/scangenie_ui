@@ -6,6 +6,8 @@ import Settings from '../views/SettingsPage.vue';
 import Profiles from '../views/ProfilePage.vue';
 import UserLogin from '../views/FormLogin.vue';
 import UploadData from '../views/UploadData.vue';
+import HrmClaim from '../views/HrmClaim.vue';
+import VendorBill from '../views/VendorBill.vue';
 
 // Definisi rute
 const routes = [
@@ -13,6 +15,8 @@ const routes = [
     { path: '/register', component: UserRegister },
     { path: '/dashboardPage', component: DashboardPage, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
     { path: '/upload_data', component: UploadData, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
+    { path: '/hrm/claim', component: HrmClaim, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
+    { path: '/vendor/bill', component: VendorBill, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
     { path: '/reports', component: Reports, meta: { requiresAuth: true, roles: ['admin'] } },
     { path: '/settings', component: Settings, meta: { requiresAuth: true, roles: ['admin'] } },
     { path: '/profiles', component: Profiles, meta: { requiresAuth: true, roles: ['admin'] } },

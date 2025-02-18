@@ -1,8 +1,9 @@
 <script setup>
     import { VAlert, VBtn, VForm, VTextField, VCardTitle, VCard, VContainer, VCardText, VImg } from 'vuetify/components'
     import api from '@/api/axios' // Gunakan Axios global
-    import { ref } from 'vue'
+    import { ref,nextTick } from 'vue'
     import { useRouter } from 'vue-router'
+    import { setToken } from '@/store/auth';
 
     const router = useRouter()
 
@@ -29,9 +30,11 @@
                 const token = response.data.token;
 
                 // Simpan token & user ke localStorage
-                localStorage.setItem('token', token);
+                setToken(token);
+                // localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(user));
 
+                await nextTick();
                 // Redirect berdasarkan role
                 if (user.role === 'admin') {
                     router.push('/dashboardPage');

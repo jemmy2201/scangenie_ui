@@ -11,7 +11,7 @@
 
     const uploadFile = async () => {
         if (!file.value) {
-            errorMessage.value = 'Pilih file terlebih dahulu';
+            errorMessage.value = 'Select the file first.';
             return;
         }
 
