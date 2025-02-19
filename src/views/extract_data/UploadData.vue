@@ -2,12 +2,13 @@
     import { ref } from 'vue';
     import api from '@/api/axios';
     import { VFileInput, VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText, VList, VListItem, VListItemTitle, VListItemSubtitle } from 'vuetify/components';
-
+    import { useRouter } from 'vue-router';
     const file = ref(null);
     const loading = ref(false);
     const successMessage = ref('');
     const errorMessage = ref('');
     const uploadedData = ref(null);
+    const router = useRouter();
 
     const uploadFile = async () => {
         if (!file.value) {
@@ -28,8 +29,16 @@
                     'Content-Type': 'multipart/form-data'
                 }
             });
+
             successMessage.value = response.data.message || 'File uploaded successfully!';
-            uploadedData.value = response.data.data || null;
+            const uploadedData = response.data.data || null;
+            console.log('jrg',uploadedData)
+            // Redirect ke halaman baru dengan data file yang di-upload
+            router.push({
+                name: 'ExtractData',
+                query: { data: JSON.stringify(uploadedData) }
+            });
+
         } catch (error) {
             errorMessage.value = error.response?.data?.message || 'Upload failed!';
         } finally {
@@ -48,7 +57,7 @@
                 <v-file-input v-model="file" label="Pilih File" outlined></v-file-input>
                 <v-alert v-if="successMessage" type="success" class="mt-2">{{ successMessage }}</v-alert>
                 <v-alert v-if="errorMessage" type="error" class="mt-2">{{ errorMessage }}</v-alert>
-                <v-btn :loading="loading" block color="blue" class="mt-4" @click="uploadFile">
+                <v-btn :loading="loading" block color="red" class="mt-4" @click="uploadFile">
                     Upload
                 </v-btn>
 

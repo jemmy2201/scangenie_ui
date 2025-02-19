@@ -5,7 +5,8 @@ import Reports from '../views/ReportsPage.vue';
 import Settings from '../views/SettingsPage.vue';
 import Profiles from '../views/ProfilePage.vue';
 import UserLogin from '../views/FormLogin.vue';
-import UploadData from '../views/UploadData.vue';
+import UploadData from '../views/extract_data/UploadData.vue';
+import ExtractData from '../views/extract_data/extract_data.vue';
 import HrmClaim from '../views/HrmClaim.vue';
 import VendorBill from '../views/VendorBill.vue';
 
@@ -15,6 +16,7 @@ const routes = [
     { path: '/register', component: UserRegister },
     { path: '/dashboardPage', component: DashboardPage, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
     { path: '/upload_data', component: UploadData, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
+    { path: '/extract/data',name: 'ExtractData', component: ExtractData, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
     { path: '/hrm/claim', component: HrmClaim, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
     { path: '/vendor/bill', component: VendorBill, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
     { path: '/reports', component: Reports, meta: { requiresAuth: true, roles: ['admin'] } },

@@ -1,5 +1,5 @@
 <script setup>
-    import { ref } from 'vue';
+    import {onMounted, ref} from 'vue';
     import api from '@/api/axios';
     import { VTextField, VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText } from 'vuetify/components';
 
@@ -9,12 +9,34 @@
     const password = ref('');
     const loading = ref(false);
     const successMessage = ref('');
+    const BtnEdit = ref('');
     const errorMessage = ref('');
     const validationErrors = ref({}) // Menyimpan error dari API
     const formErrors = ref({
         email: [],
         password: [],
     });
+
+    const LoadData = async () => {
+        try {
+            const response = await api.post('/HrmClaim/select');
+            BtnEdit.value = response.data.claims;
+        } catch (error) {
+            if (error.response && error.response.data) {
+                const responseData = error.response.data
+                if (responseData.errors) {
+                    // Simpan error validasi ke variabel state
+                    validationErrors.value = responseData.errors
+                } else {
+                    errorMessage.value = responseData.message || 'Claim registered failed!'
+                }
+            } else {
+                errorMessage.value = 'Something went wrong, please try again later.'
+            }
+        } finally {
+            loading.value = false;
+        }
+    };
 
     const submitForm = async () => {
         if (!subdomain.value || !email.value || !password.value) {
@@ -36,9 +58,8 @@
         try {
             const response = await api.post('/HrmClaim/insert', formData);
             successMessage.value = response.data.message || 'Form submitted successfully!';
+            await LoadData();
         } catch (error) {
-            console.log('jrg',error)
-
             if (error.response && error.response.data) {
                 const responseData = error.response.data
                 if (responseData.errors) {
@@ -54,6 +75,10 @@
             loading.value = false;
         }
     };
+
+    onMounted(() => {
+        LoadData();
+    });
 </script>
 
 <template>
@@ -98,7 +123,7 @@
 
                 <!-- Submit Button -->
                 <v-btn :loading="loading" block color="red" class="mt-4" @click="submitForm">
-                    Submit
+                    {{ BtnEdit.length > 0 ? 'Update' : 'Submit' }}
                 </v-btn>
             </v-card-text>
         </v-card>
