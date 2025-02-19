@@ -2,19 +2,19 @@
   <v-app>
       <v-app-bar v-if="isLoggedIn" color="white" elevation="0" app absolute>
           <v-toolbar-title>
-    <span class="ml-2" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FF5722;">
-      ScanGenie
-    </span>
-              <v-btn icon @click="toggleDrawer">
-                  <v-icon>mdi-menu</v-icon>
-              </v-btn>
+            <span class="ml-2" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #FF5722;">
+              ScanGenie
+            </span>
+            <v-btn icon @click="toggleDrawer">
+                <v-icon>mdi-menu</v-icon>
+            </v-btn>
           </v-toolbar-title>
           <v-spacer></v-spacer>
       </v-app-bar>
 
       <!-- Sidebar Drawer -->
       <v-navigation-drawer v-if="isLoggedIn" v-model="drawer" app elevation="0">
-          <v-list dense>
+          <v-list dense class="d-flex flex-column h-100">
               <!-- Tools Menu -->
               <v-list-group>
                   <template v-slot:activator="{ props }">
@@ -45,13 +45,14 @@
                   </v-list-item>
               </v-list-group>
 
-              <!-- Logout -->
-              <v-list-item @click="goToLogout">
+              <!-- Logout (Paling Bawah) -->
+              <v-list-item @click="goToLogout" class="mt-auto">
                   <v-icon left>mdi-logout</v-icon>
                   Logout
               </v-list-item>
           </v-list>
       </v-navigation-drawer>
+
 
 
       <!-- App Bar for Desktop -->
