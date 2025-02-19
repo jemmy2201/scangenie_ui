@@ -1,17 +1,19 @@
 <script setup>
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted, nextTick } from 'vue';
     import { useRoute } from 'vue-router';
-    import { VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText} from 'vuetify/components';
+    import { VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText, VTextField } from 'vuetify/components';
 
     const route = useRoute();
     const fileData = ref({});
 
     // Ambil data dari query parameter saat halaman dimuat
-    onMounted(() => {
+    onMounted(async () => {
         try {
             if (route.query.data) {
-                fileData.value = JSON.parse(route.query.data);
-                console.log('jrg 2',fileData.value)
+                const parsedData = JSON.parse(route.query.data);
+                Object.assign(fileData.value, parsedData); // Memastikan reaktivitas
+                await nextTick(); // Tunggu Vue update DOM
+                console.log('Data setelah diparse:', fileData.value);
             }
         } catch (error) {
             console.error('Error parsing data:', error);
@@ -27,7 +29,7 @@
 </script>
 
 <template>
-    <v-container>
+    <v-container class="fill-height d-flex justify-center align-center">
         <v-card class="edit-card" elevation="10">
             <v-card-title class="text-center text-h5 font-weight-bold">Edit Uploaded Data</v-card-title>
             <v-card-text>
