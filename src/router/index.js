@@ -34,6 +34,11 @@ router.beforeEach((to, from, next) => {
     const userData = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
+    // Jika user sudah login, cegah akses ke halaman login
+    if (userData && token && to.path === '/') {
+        return next('/dashboardPage'); // Redirect ke dashboard jika sudah login
+    }
+
     if (to.meta.requiresAuth) {
         if (!userData || !token) {
             return next('/'); // Redirect ke login jika tidak ada user
