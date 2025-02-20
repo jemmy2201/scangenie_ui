@@ -42,9 +42,15 @@
                             outlined
                     ></v-text-field>
 
-                    <v-btn block color="primary" class="mt-4" @click="saveChanges">
-                        Save Changes
-                    </v-btn>
+                    <!-- Wrapper untuk mengatur tombol ke kanan -->
+                    <div class="d-flex justify-end mt-4 ">
+                        <v-btn color="secondary mr-3" @click="saveChanges">
+                            Back
+                        </v-btn>
+                        <v-btn color="red" class="mr-2" @click="saveChanges">
+                            Post
+                        </v-btn>
+                    </div>
                 </template>
                 <v-alert v-else type="error" class="mt-2">
                     No data available to edit.

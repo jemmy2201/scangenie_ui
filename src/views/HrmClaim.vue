@@ -20,6 +20,9 @@
     const LoadData = async () => {
         try {
             const response = await api.post('/HrmClaim/select');
+            subdomain.value = response.data.claims[0].subdomain
+            email.value = response.data.claims[0].email
+            password.value = response.data.claims[0].password
             BtnEdit.value = response.data.claims;
         } catch (error) {
             if (error.response && error.response.data) {
