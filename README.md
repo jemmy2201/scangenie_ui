@@ -38,9 +38,9 @@ docker exec -it scangenie_ui sh
 2. docker login
 3. docker-compose up -d --build
 4. docker ps -a
-5. docker commit <container_id> jemmy22/scangenie_ui:v1.7
-6. docker build -t jemmy22/scangenie_ui:v1.7 .
-7. docker push jemmy22/scangenie_ui:v1.7
+5. docker commit <container_id> jemmy22/scangenie_ui:v1.8
+6. docker build -t jemmy22/scangenie_ui:v1.8 .
+7. docker push jemmy22/scangenie_ui:v1.8
 
 
 
