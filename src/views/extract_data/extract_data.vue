@@ -1,10 +1,15 @@
 <script setup>
     import { ref, onMounted, nextTick } from 'vue';
-    import { useRoute } from 'vue-router';
-    import { VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText, VTextField } from 'vuetify/components';
+    import {useRoute, useRouter} from 'vue-router';
+    import { VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText, VTextField, VDialog, VList, VListItem, VListItemTitle } from 'vuetify/components';
+    import api from '@/api/axios';
 
     const route = useRoute();
     const fileData = ref({});
+    const claims = ref([]); // Data klaim
+    const selectedClaim = ref(null); // Klaim yang dipilih
+    const dialog = ref(false); // Status dialog popup
+    const router = useRouter();
 
     // Ambil data dari query parameter saat halaman dimuat
     onMounted(async () => {
@@ -19,12 +24,34 @@
             console.error('Error parsing data:', error);
             fileData.value = {}; // Default jika parsing gagal
         }
+
+        // Fetch data klaim dari API
+        fetchClaims();
     });
+
+    // Fungsi mengambil data klaim
+    const fetchClaims = async () => {
+        try {
+
+            const response = await api.post('/endpoint/hrmilion/getclaimtype');
+            console.log('Response API:', response.data); // Debugging untuk memastikan data yang diterima
+
+            // Pastikan path menuju array data benar
+            claims.value = response.data.claims.original.data.data;
+        } catch (error) {
+            console.error('Error fetching claims:', error);
+        }
+    };
+
+    // Fungsi memilih klaim
+    const selectClaim = (claim) => {
+        selectedClaim.value = claim;
+        dialog.value = false; // Tutup dialog setelah memilih
+    };
 
     // Fungsi untuk menyimpan perubahan
     const saveChanges = () => {
-        console.log('Saved Data:', fileData.value);
-        alert('Data updated successfully!');
+        router.push('/upload_data');
     };
 </script>
 
@@ -42,12 +69,18 @@
                             outlined
                     ></v-text-field>
 
-                    <!-- Wrapper untuk mengatur tombol ke kanan -->
-                    <div class="d-flex justify-end mt-4 ">
-                        <v-btn color="secondary mr-3" @click="saveChanges">
+                    <!-- Wrapper untuk tombol -->
+                    <div class="d-flex justify-space-between align-center mt-4">
+                        <v-btn color="secondary" @click="saveChanges">
                             Back
                         </v-btn>
-                        <v-btn color="red" class="mr-2" @click="saveChanges">
+
+                        <v-btn color="primary" class="mx-2" @click="dialog = true">
+<!--                            {{ selectedClaim ? selectedClaim.claimdesp : "Select Claim" }}-->
+                            Select Claim
+                        </v-btn>
+
+                        <v-btn color="red" :disabled="!selectedClaim" @click="saveChanges">
                             Post
                         </v-btn>
                     </div>
@@ -57,6 +90,25 @@
                 </v-alert>
             </v-card-text>
         </v-card>
+
+        <!-- Dialog Popup untuk Select Claim -->
+        <v-dialog v-model="dialog" max-width="400">
+            <v-card>
+                <v-card-title class="text-center text-h6">Select Claim</v-card-title>
+                <v-card-text>
+                    <v-list>
+                        <v-list-item
+                                v-for="claim in claims"
+                                :key="claim.id"
+                                @click="selectClaim(claim)"
+                                class="cursor-pointer"
+                        >
+                            <v-list-item-title>{{ claim.claimdesp }}</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </v-container>
 </template>
 
@@ -65,5 +117,8 @@
         width: 400px;
         padding: 20px;
         border-radius: 16px;
+    }
+    .cursor-pointer {
+        cursor: pointer;
     }
 </style>

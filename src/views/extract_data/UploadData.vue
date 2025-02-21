@@ -32,7 +32,6 @@
 
             successMessage.value = response.data.message || 'File uploaded successfully!';
             const uploadedData = response.data.data || null;
-            console.log('jrg',uploadedData)
             // Redirect ke halaman baru dengan data file yang di-upload
             router.push({
                 name: 'ExtractData',
