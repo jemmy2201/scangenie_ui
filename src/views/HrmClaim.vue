@@ -97,12 +97,12 @@
             const response = await api.post('/endpoint/hrmilion/login', testData);
 
             if (response.data.success) {
-                testSuccessMessage.value = '✅ Koneksi berhasil!';
+                testSuccessMessage.value = 'Connection successful!';
             } else {
-                testErrorMessage.value = '❌ Koneksi gagal!';
+                testErrorMessage.value = 'Connection failed!';
             }
         } catch (error) {
-            testErrorMessage.value = '❌ Koneksi gagal! Periksa kembali endpoint atau jaringan.';
+            testErrorMessage.value = 'Connection failed! Please check your endpoint or network again.';
         } finally {
             testLoading.value = false;
         }

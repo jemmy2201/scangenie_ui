@@ -16,6 +16,10 @@
       <v-navigation-drawer v-if="isLoggedIn" v-model="drawer" app elevation="0">
           <v-list dense class="d-flex flex-column h-100">
               <!-- Tools Menu -->
+              <v-list-item to="/" >
+                  <v-icon left>mdi-view-dashboard</v-icon>
+                  Dashboard
+              </v-list-item>
               <v-list-group>
                   <template v-slot:activator="{ props }">
                       <v-list-item v-bind="props">
@@ -36,13 +40,11 @@
                           <v-icon left>mdi-cog</v-icon>
                           Endpoint Setting
                       </v-list-item>
+                      <v-list-item to="/upload_data">
+                          <v-icon left>mdi-upload</v-icon>
+                          Extract
+                      </v-list-item>
                   </v-list-group>
-
-                  <!-- Extract Submenu -->
-                  <v-list-item to="/upload_data">
-                      <v-icon left>mdi-upload</v-icon>
-                      Extract
-                  </v-list-item>
               </v-list-group>
 
               <!-- Logout (Paling Bawah) -->
