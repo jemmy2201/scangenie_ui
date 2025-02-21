@@ -4,36 +4,41 @@
             <v-card-title class="text-center text-h5 font-weight-bold">Edit Uploaded Data</v-card-title>
             <v-card-text>
                 <template v-if="Object.keys(fileData).length">
-                    <v-text-field
-                            v-for="(value, key) in fileData"
-                            :key="key"
-                            v-model="fileData[key]"
-                            :label="key"
-                            outlined
-                    ></v-text-field>
+                    <v-row>
+                        <v-col cols="12" md="6">
+                            <v-text-field
+                                    v-for="(value, key) in fileData"
+                                    :key="key"
+                                    v-model="fileData[key]"
+                                    :label="key"
+                                    outlined
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <!-- Select Box untuk memilih klaim -->
+                            <v-select
+                                    v-model="selectedClaim"
+                                    :items="claims"
+                                    item-title="claimdesp"
+                                    item-value="id"
+                                    label="Select Claim"
+                                    outlined
+                                    return-object
+                            ></v-select>
 
-                    <!-- Select Box untuk memilih klaim -->
-                    <v-select
-                            v-model="selectedClaim"
-                            :items="claims"
-                            item-title="claimdesp"
-                            item-value="id"
-                            label="Select Claim"
-                            outlined
-                            return-object
-                    ></v-select>
-
-                    <!-- Select Box untuk memilih payment mode -->
-                    <v-select
-                            v-model="selectedPaymentMode"
-                            :items="paymentModes"
-                            item-title="paydesp"
-                            item-value="id"
-                            label="Select Payment Mode"
-                            outlined
-                            dense
-                            return-object
-                    ></v-select>
+                            <!-- Select Box untuk memilih payment mode -->
+                            <v-select
+                                    v-model="selectedPaymentMode"
+                                    :items="paymentModes"
+                                    item-title="paydesp"
+                                    item-value="id"
+                                    label="Select Payment Mode"
+                                    outlined
+                                    dense
+                                    return-object
+                            ></v-select>
+                        </v-col>
+                    </v-row>
 
                     <!-- Wrapper untuk tombol -->
                     <div class="d-flex justify-space-between align-center mt-4">
@@ -59,7 +64,7 @@
         </v-card>
 
         <!-- Dialog Popup untuk Select Claim -->
-        <v-dialog v-model="DialogClaim" max-width="400">
+        <v-dialog v-model="DialogClaim" max-width="500">
             <v-card>
                 <v-card-title class="text-center text-h6">Select Claim</v-card-title>
                 <v-card-text>
@@ -76,14 +81,16 @@
                 </v-card-text>
             </v-card>
         </v-dialog>
-        <v-dialog v-model="DialogPaymentMode" max-width="400">
+
+        <!-- Dialog Popup untuk Select Payment Mode -->
+        <v-dialog v-model="DialogPaymentMode" max-width="500">
             <v-card>
-                <v-card-title class="text-center text-h6">Select Claim</v-card-title>
+                <v-card-title class="text-center text-h6">Select Payment Mode</v-card-title>
                 <v-card-text>
                     <v-select
                             v-model="selectedPaymentMode"
                             :items="paymentModes"
-                            item-title="paycode"
+                            item-title="paydesp"
                             item-value="id"
                             label="Select Payment Mode"
                             outlined
@@ -176,8 +183,8 @@
 
 <style scoped>
     .edit-card {
-        width: 400px;
-        padding: 20px;
+        width: 800px;
+        padding: 30px;
         border-radius: 16px;
     }
     .cursor-pointer {
