@@ -37,7 +37,7 @@
                     errorMessage.value = responseData.message || 'Claim registered failed!';
                 }
             } else {
-                errorMessage.value = 'Something went wrong, please try again later.';
+                // errorMessage.value = 'Something went wrong, please try again later.';
             }
         } finally {
             loading.value = false;
