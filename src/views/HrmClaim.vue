@@ -1,5 +1,5 @@
 <script setup>
-    import {onMounted, ref} from 'vue';
+    import { onMounted, ref } from 'vue';
     import api from '@/api/axios';
     import { VTextField, VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText } from 'vuetify/components';
 
@@ -11,30 +11,33 @@
     const successMessage = ref('');
     const BtnEdit = ref('');
     const errorMessage = ref('');
-    const validationErrors = ref({}) // Menyimpan error dari API
+    const validationErrors = ref({});
     const formErrors = ref({
         email: [],
         password: [],
     });
 
+    const testSuccessMessage = ref('');
+    const testErrorMessage = ref('');
+    const testLoading = ref(false);
+
     const LoadData = async () => {
         try {
             const response = await api.post('/HrmClaim/select');
-            subdomain.value = response.data.claims[0].subdomain
-            email.value = response.data.claims[0].email
-            password.value = response.data.claims[0].password
+            subdomain.value = response.data.claims[0].subdomain;
+            email.value = response.data.claims[0].email;
+            password.value = response.data.claims[0].password;
             BtnEdit.value = response.data.claims;
         } catch (error) {
             if (error.response && error.response.data) {
-                const responseData = error.response.data
+                const responseData = error.response.data;
                 if (responseData.errors) {
-                    // Simpan error validasi ke variabel state
-                    validationErrors.value = responseData.errors
+                    validationErrors.value = responseData.errors;
                 } else {
-                    errorMessage.value = responseData.message || 'Claim registered failed!'
+                    errorMessage.value = responseData.message || 'Claim registered failed!';
                 }
             } else {
-                errorMessage.value = 'Something went wrong, please try again later.'
+                errorMessage.value = 'Something went wrong, please try again later.';
             }
         } finally {
             loading.value = false;
@@ -64,18 +67,44 @@
             await LoadData();
         } catch (error) {
             if (error.response && error.response.data) {
-                const responseData = error.response.data
+                const responseData = error.response.data;
                 if (responseData.errors) {
-                    // Simpan error validasi ke variabel state
-                    validationErrors.value = responseData.errors
+                    validationErrors.value = responseData.errors;
                 } else {
-                    errorMessage.value = responseData.message || 'Login failed!'
+                    errorMessage.value = responseData.message || 'Login failed!';
                 }
             } else {
-                errorMessage.value = 'Something went wrong, please try again later.'
+                errorMessage.value = 'Something went wrong, please try again later.';
             }
         } finally {
             loading.value = false;
+        }
+    };
+
+    // Fungsi untuk menguji koneksi API dengan parameter
+    const testConnection = async () => {
+        testSuccessMessage.value = '';
+        testErrorMessage.value = '';
+        testLoading.value = true;
+
+        const testData = {
+            subdomain: subdomain.value,
+            email: email.value,
+            password: password.value
+        };
+
+        try {
+            const response = await api.post('/endpoint/hrmilion/login', testData);
+
+            if (response.data.success) {
+                testSuccessMessage.value = '✅ Koneksi berhasil!';
+            } else {
+                testErrorMessage.value = '❌ Koneksi gagal!';
+            }
+        } catch (error) {
+            testErrorMessage.value = '❌ Koneksi gagal! Periksa kembali endpoint atau jaringan.';
+        } finally {
+            testLoading.value = false;
         }
     };
 
@@ -87,10 +116,17 @@
 <template>
     <v-container class="fill-height d-flex justify-center align-center">
         <v-card class="form-card" elevation="10">
-            <v-card-title class="text-center text-h5 font-weight-bold">
-                HRM Claim
+            <v-card-title class="d-flex justify-space-between align-center">
+                <span class="text-h5 font-weight-bold">HRM Claim</span>
+                <v-btn color="primary" @click="testConnection" :loading="testLoading">
+                    Test Koneksi
+                </v-btn>
             </v-card-title>
             <v-card-text>
+                <!-- Notifikasi Test Koneksi -->
+                <v-alert v-if="testSuccessMessage" type="success" class="mb-2">{{ testSuccessMessage }}</v-alert>
+                <v-alert v-if="testErrorMessage" type="error" class="mb-2">{{ testErrorMessage }}</v-alert>
+
                 <!-- Subdomain Field -->
                 <v-text-field
                         v-model="subdomain"
