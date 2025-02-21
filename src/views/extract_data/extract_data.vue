@@ -23,16 +23,30 @@
                             return-object
                     ></v-select>
 
+                    <!-- Select Box untuk memilih payment mode -->
+                    <v-select
+                            v-model="selectedPaymentMode"
+                            :items="paymentModes"
+                            item-title="paydesp"
+                            item-value="id"
+                            label="Select Payment Mode"
+                            outlined
+                            dense
+                            return-object
+                    ></v-select>
+
                     <!-- Wrapper untuk tombol -->
                     <div class="d-flex justify-space-between align-center mt-4">
                         <v-btn color="secondary" @click="saveChanges">
                             Back
                         </v-btn>
 
-                        <v-btn color="primary" class="mx-2" @click="dialog = true">
+                        <v-btn color="primary" class="mx-2" @click="DialogClaim = true">
                             Select Claim
                         </v-btn>
-
+                        <v-btn color="primary" class="mx-2" @click="DialogPaymentMode = true">
+                            Select Payment Mode
+                        </v-btn>
                         <v-btn color="red" :disabled="!selectedClaim" @click="saveChanges">
                             Post
                         </v-btn>
@@ -45,7 +59,7 @@
         </v-card>
 
         <!-- Dialog Popup untuk Select Claim -->
-        <v-dialog v-model="dialog" max-width="400">
+        <v-dialog v-model="DialogClaim" max-width="400">
             <v-card>
                 <v-card-title class="text-center text-h6">Select Claim</v-card-title>
                 <v-card-text>
@@ -62,6 +76,23 @@
                 </v-card-text>
             </v-card>
         </v-dialog>
+        <v-dialog v-model="DialogPaymentMode" max-width="400">
+            <v-card>
+                <v-card-title class="text-center text-h6">Select Claim</v-card-title>
+                <v-card-text>
+                    <v-select
+                            v-model="selectedPaymentMode"
+                            :items="paymentModes"
+                            item-title="paycode"
+                            item-value="id"
+                            label="Select Payment Mode"
+                            outlined
+                            dense
+                            @update:modelValue="selectPaymentMode"
+                    />
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </v-container>
 </template>
 
@@ -69,14 +100,17 @@
     import { ref, onMounted, nextTick } from 'vue';
     import { useRoute, useRouter } from 'vue-router';
     import api from '@/api/axios';
-    import { VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText, VTextField, VDialog,VSelect} from 'vuetify/components';
+    import { VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText, VTextField, VDialog, VSelect } from 'vuetify/components';
 
     const route = useRoute();
     const router = useRouter();
     const fileData = ref({});
     const claims = ref([]); // Data klaim
     const selectedClaim = ref(null); // Klaim yang dipilih
-    const dialog = ref(false); // Status dialog popup
+    const paymentModes = ref([]); // Data payment mode
+    const selectedPaymentMode = ref(null); // Payment mode yang dipilih
+    const DialogClaim = ref(false); // Status dialog popup
+    const DialogPaymentMode = ref(false); // Status dialog popup
 
     // Ambil data dari query parameter saat halaman dimuat
     onMounted(async () => {
@@ -94,6 +128,8 @@
 
         // Fetch data klaim dari API
         fetchClaims();
+        // Fetch data payment mode dari API
+        fetchPaymentModes();
     });
 
     // Fungsi mengambil data klaim
@@ -109,10 +145,27 @@
         }
     };
 
+    // Fungsi mengambil data payment mode
+    const fetchPaymentModes = async () => {
+        try {
+            const response = await api.post('/endpoint/hrmilion/getpaymentmode');
+            console.log('Response API Payment Mode:', response.data); // Debugging
+
+            // Pastikan path menuju array data benar
+            paymentModes.value = response.data.claims.original.data.data;
+        } catch (error) {
+            console.error('Error fetching payment modes:', error);
+        }
+    };
+
     // Fungsi memilih klaim dari dialog
     const selectClaim = (claim) => {
         selectedClaim.value = claim;
-        dialog.value = false; // Tutup dialog setelah memilih
+        DialogClaim.value = false; // Tutup dialog setelah memilih
+    };
+    const selectPaymentMode = (claim) => {
+        selectedPaymentMode.value = claim;
+        DialogPaymentMode.value = false; // Tutup dialog setelah memilih
     };
 
     // Fungsi untuk menyimpan perubahan
