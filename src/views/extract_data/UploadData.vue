@@ -53,7 +53,7 @@
                 Upload File
             </v-card-title>
             <v-card-text>
-                <v-file-input v-model="file" label="Pilih File" outlined></v-file-input>
+                <v-file-input v-model="file" label="Select File" outlined></v-file-input>
                 <v-alert v-if="successMessage" type="success" class="mt-2">{{ successMessage }}</v-alert>
                 <v-alert v-if="errorMessage" type="error" class="mt-2">{{ errorMessage }}</v-alert>
                 <v-btn :loading="loading" block color="red" class="mt-4" @click="uploadFile">

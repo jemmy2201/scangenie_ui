@@ -34,7 +34,7 @@
                 if (responseData.errors) {
                     validationErrors.value = responseData.errors;
                 } else {
-                    errorMessage.value = responseData.message || 'Claim registered failed!';
+                    errorMessage.value = responseData.message || 'Connection registered failed!';
                 }
             } else {
                 // errorMessage.value = 'Something went wrong, please try again later.';
@@ -119,7 +119,7 @@
             <v-card-title class="d-flex justify-space-between align-center">
                 <span class="text-h5 font-weight-bold">HRM Claim</span>
                 <v-btn color="primary" @click="testConnection" :loading="testLoading">
-                    Test Koneksi
+                    Connection
                 </v-btn>
             </v-card-title>
             <v-card-text>
