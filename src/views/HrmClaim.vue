@@ -102,7 +102,7 @@
                 testErrorMessage.value = 'Connection failed!';
             }
         } catch (error) {
-            testErrorMessage.value = 'Connection failed! Please check your endpoint or network again.';
+            testErrorMessage.value = 'Connection failed!';
         } finally {
             testLoading.value = false;
         }
@@ -119,7 +119,7 @@
             <v-card-title class="d-flex justify-space-between align-center">
                 <span class="text-h5 font-weight-bold">HRM Claim</span>
                 <v-btn color="primary" @click="testConnection" :loading="testLoading">
-                    Connection
+                    TEST
                 </v-btn>
             </v-card-title>
             <v-card-text>
