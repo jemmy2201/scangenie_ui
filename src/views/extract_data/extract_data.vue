@@ -14,30 +14,30 @@
                                     outlined
                             ></v-text-field>
                         </v-col>
-                        <v-col cols="12" md="6">
-                            <!-- Select Box untuk memilih klaim -->
-                            <v-select
-                                    v-model="selectedClaim"
-                                    :items="claims"
-                                    item-title="claimdesp"
-                                    item-value="id"
-                                    label="Select Claim"
-                                    outlined
-                                    return-object
-                            ></v-select>
+<!--                        <v-col cols="12" md="6">-->
+<!--                            &lt;!&ndash; Select Box untuk memilih klaim &ndash;&gt;-->
+<!--                            <v-select-->
+<!--                                    v-model="selectedClaim"-->
+<!--                                    :items="claims"-->
+<!--                                    item-title="claimdesp"-->
+<!--                                    item-value="id"-->
+<!--                                    label="Select Claim"-->
+<!--                                    outlined-->
+<!--                                    return-object-->
+<!--                            ></v-select>-->
 
-                            <!-- Select Box untuk memilih payment mode -->
-                            <v-select
-                                    v-model="selectedPaymentMode"
-                                    :items="paymentModes"
-                                    item-title="paydesp"
-                                    item-value="id"
-                                    label="Select Payment Mode"
-                                    outlined
-                                    dense
-                                    return-object
-                            ></v-select>
-                        </v-col>
+<!--                            &lt;!&ndash; Select Box untuk memilih payment mode &ndash;&gt;-->
+<!--                            <v-select-->
+<!--                                    v-model="selectedPaymentMode"-->
+<!--                                    :items="paymentModes"-->
+<!--                                    item-title="paydesp"-->
+<!--                                    item-value="id"-->
+<!--                                    label="Select Payment Mode"-->
+<!--                                    outlined-->
+<!--                                    dense-->
+<!--                                    return-object-->
+<!--                            ></v-select>-->
+<!--                        </v-col>-->
                     </v-row>
 
                     <!-- Wrapper untuk tombol -->
