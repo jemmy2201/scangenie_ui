@@ -21,7 +21,7 @@
                   Dashboard
               </v-list-item>
               <v-list-item to="/" >
-                  <v-icon left>mdi-view-dashboard</v-icon>
+                  <v-icon left>mdi-file</v-icon>
                   Documents
               </v-list-item>
               <v-list-item to="/upload_data" >

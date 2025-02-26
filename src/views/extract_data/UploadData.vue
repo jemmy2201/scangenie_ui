@@ -1,18 +1,30 @@
 <script setup>
     import { ref } from 'vue';
     import api from '@/api/axios';
-    import { VFileInput, VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText, VList, VListItem, VListItemTitle, VListItemSubtitle } from 'vuetify/components';
     import { useRouter } from 'vue-router';
-    const file = ref(null);
+    import { VFileInput, VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText, VIcon } from 'vuetify/components';
+
+    const files = ref([{ id: Date.now(), file: null }]); // Setidaknya ada 1 file input
     const loading = ref(false);
     const successMessage = ref('');
     const errorMessage = ref('');
-    const uploadedData = ref(null);
     const router = useRouter();
 
+    const addFileInput = () => {
+        if (files.value.length < 10) {
+            files.value.push({ id: Date.now(), file: null });
+        }
+    };
+
+    const removeFileInput = (index) => {
+        if (files.value.length > 1) {
+            files.value.splice(index, 1);
+        }
+    };
+
     const uploadFile = async () => {
-        if (!file.value) {
-            errorMessage.value = 'Select the file first.';
+        if (files.value.every(f => !f.file)) {
+            errorMessage.value = 'Pilih setidaknya satu file!';
             return;
         }
 
@@ -21,25 +33,25 @@
         loading.value = true;
 
         const formData = new FormData();
-        formData.append('file', file.value);
+        files.value.forEach((f) => {
+            if (f.file) {
+                formData.append(`files[]`, f.file);
+            }
+        });
 
         try {
             const response = await api.post('/upload', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
 
-            successMessage.value = response.data.message || 'File uploaded successfully!';
-            const uploadedData = response.data.data || null;
-            // Redirect ke halaman baru dengan data file yang di-upload
+            successMessage.value = response.data.message || 'File berhasil diunggah!';
+
             router.push({
                 name: 'ExtractData',
-                query: { data: JSON.stringify(uploadedData) }
+                query: { data: JSON.stringify(response.data.results) }
             });
-
         } catch (error) {
-            errorMessage.value = error.response?.data?.message || 'Upload failed!';
+            errorMessage.value = error.response?.data?.message || 'Upload gagal!';
         } finally {
             loading.value = false;
         }
@@ -48,27 +60,30 @@
 
 <template>
     <v-container class="fill-height d-flex justify-center align-center">
-        <v-card class="upload-card" elevation="10">
+        <v-card class="upload-card" elevation="12">
             <v-card-title class="text-center text-h5 font-weight-bold">
                 Upload File
             </v-card-title>
             <v-card-text>
-                <v-file-input v-model="file" label="Select File" outlined></v-file-input>
-                <v-alert v-if="successMessage" type="success" class="mt-2">{{ successMessage }}</v-alert>
-                <v-alert v-if="errorMessage" type="error" class="mt-2">{{ errorMessage }}</v-alert>
-                <v-btn :loading="loading" block color="red" class="mt-4" @click="uploadFile">
+                <div v-for="(fileObj, index) in files" :key="fileObj.id" class="d-flex align-center mb-3 file-input-wrapper">
+                    <v-file-input v-model="fileObj.file" label="Pilih File" variant="outlined" class="flex-grow-1"></v-file-input>
+                    <v-btn icon color="error" class="ml-3" @click="removeFileInput(index)" v-if="files.length > 1">
+                        <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                </div>
+
+                <v-btn v-if="files.length < 10" block color="primary" class="mt-3" @click="addFileInput">
+                    <v-icon left>mdi-plus</v-icon> Tambah File
+                </v-btn>
+
+                <v-alert v-if="successMessage" type="success" class="mt-3">{{ successMessage }}</v-alert>
+                <v-alert v-if="errorMessage" type="error" class="mt-3">{{ errorMessage }}</v-alert>
+
+                <v-btn :loading="loading" block color="success" class="mt-4 upload-btn" @click="uploadFile">
                     Upload
                 </v-btn>
 
-                <div v-if="uploadedData" class="mt-4">
-                    <v-card-title class="text-center text-h6 font-weight-bold">Uploaded Data</v-card-title>
-                    <v-list>
-                        <v-list-item v-for="(value, key) in uploadedData" :key="key">
-                            <v-list-item-title>{{ key }}</v-list-item-title>
-                            <v-list-item-subtitle>{{ value }}</v-list-item-subtitle>
-                        </v-list-item>
-                    </v-list>
-                </div>
+
             </v-card-text>
         </v-card>
     </v-container>
@@ -76,8 +91,16 @@
 
 <style scoped>
     .upload-card {
-        width: 400px;
-        padding: 20px;
-        border-radius: 16px;
+        width: 450px;
+        padding: 24px;
+        border-radius: 20px;
+        background: #f9f9f9;
+    }
+    .file-input-wrapper {
+        display: flex;
+        align-items: center;
+    }
+    .upload-btn {
+        font-weight: bold;
     }
 </style>
