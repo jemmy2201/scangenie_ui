@@ -24,7 +24,7 @@
 
     const uploadFile = async () => {
         if (files.value.every(f => !f.file)) {
-            errorMessage.value = 'Pilih setidaknya satu file!';
+            errorMessage.value = 'Select at least one file!';
             return;
         }
 
@@ -44,14 +44,14 @@
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
-            successMessage.value = response.data.message || 'File berhasil diunggah!';
+            successMessage.value = response.data.message || 'File uploaded successfully!';
 
             router.push({
                 name: 'ExtractData',
                 query: { data: JSON.stringify(response.data.results) }
             });
         } catch (error) {
-            errorMessage.value = error.response?.data?.message || 'Upload gagal!';
+            errorMessage.value = error.response?.data?.message || 'Upload failed!';
         } finally {
             loading.value = false;
         }
@@ -66,23 +66,21 @@
             </v-card-title>
             <v-card-text>
                 <div v-for="(fileObj, index) in files" :key="fileObj.id" class="d-flex align-center mb-3 file-input-wrapper">
-                    <v-file-input v-model="fileObj.file" label="Pilih File" variant="outlined" class="flex-grow-1"></v-file-input>
-                    <v-btn icon color="error" class="ml-3" @click="removeFileInput(index)" v-if="files.length > 1">
+                    <v-file-input v-model="fileObj.file" label="Select File" variant="outlined" class="flex-grow-1"></v-file-input>
+                    <v-btn icon color="error" class="ml-3 mt-n5" @click="removeFileInput(index)" v-if="files.length > 1">
                         <v-icon>mdi-delete</v-icon>
                     </v-btn>
                 </div>
 
                 <v-btn v-if="files.length < 10" block color="primary" class="mt-3" @click="addFileInput">
-                    <v-icon left>mdi-plus</v-icon> Tambah File
+                    <v-icon left>mdi-plus</v-icon> Add File
                 </v-btn>
-
-                <v-alert v-if="successMessage" type="success" class="mt-3">{{ successMessage }}</v-alert>
-                <v-alert v-if="errorMessage" type="error" class="mt-3">{{ errorMessage }}</v-alert>
 
                 <v-btn :loading="loading" block color="success" class="mt-4 upload-btn" @click="uploadFile">
                     Upload
                 </v-btn>
-
+                <v-alert v-if="successMessage" type="success" class="mt-3">{{ successMessage }}</v-alert>
+                <v-alert v-if="errorMessage" type="error" class="mt-3">{{ errorMessage }}</v-alert>
 
             </v-card-text>
         </v-card>
