@@ -20,32 +20,40 @@
                   <v-icon left>mdi-view-dashboard</v-icon>
                   Dashboard
               </v-list-item>
-              <v-list-group>
-                  <template v-slot:activator="{ props }">
-                      <v-list-item v-bind="props">
-                          <v-icon left>mdi-tools</v-icon>
-                          Tools
-                      </v-list-item>
-                  </template>
+              <v-list-item to="/" >
+                  <v-icon left>mdi-view-dashboard</v-icon>
+                  Documents
+              </v-list-item>
+              <v-list-item to="/upload_data" >
+                  <v-icon left>mdi-upload</v-icon>
+                  PDF Extract
+              </v-list-item>
+<!--              <v-list-group>-->
+<!--                  <template v-slot:activator="{ props }">-->
+<!--                      <v-list-item v-bind="props">-->
+<!--                          <v-icon left>mdi-tools</v-icon>-->
+<!--                          Tools-->
+<!--                      </v-list-item>-->
+<!--                  </template>-->
 
-                  <!-- HRM Claim Submenu -->
-                  <v-list-group>
-                      <template v-slot:activator="{ props }">
-                          <v-list-item v-bind="props">
-                              <v-icon left>mdi-account-group</v-icon>
-                              HRM Claim
-                          </v-list-item>
-                      </template>
-                      <v-list-item to="/hrm/claim">
-                          <v-icon left>mdi-cog</v-icon>
-                          Endpoint Setting
-                      </v-list-item>
-                      <v-list-item to="/upload_data">
-                          <v-icon left>mdi-upload</v-icon>
-                          Extract
-                      </v-list-item>
-                  </v-list-group>
-              </v-list-group>
+<!--                  &lt;!&ndash; HRM Claim Submenu &ndash;&gt;-->
+<!--                  <v-list-group>-->
+<!--                      <template v-slot:activator="{ props }">-->
+<!--                          <v-list-item v-bind="props">-->
+<!--                              <v-icon left>mdi-account-group</v-icon>-->
+<!--                              HRM Claim-->
+<!--                          </v-list-item>-->
+<!--                      </template>-->
+<!--                      <v-list-item to="/hrm/claim">-->
+<!--                          <v-icon left>mdi-cog</v-icon>-->
+<!--                          Endpoint Setting-->
+<!--                      </v-list-item>-->
+<!--                      <v-list-item to="/upload_data">-->
+<!--                          <v-icon left>mdi-upload</v-icon>-->
+<!--                          Extract-->
+<!--                      </v-list-item>-->
+<!--                  </v-list-group>-->
+<!--              </v-list-group>-->
 
               <!-- Logout (Paling Bawah) -->
               <v-list-item @click="goToLogout" class="mt-auto">
@@ -131,7 +139,7 @@
 </template>
 
 <script setup>
-  import { VApp, VAppBar, VToolbarTitle, VSpacer, VIcon, VMain, VContainer, VFooter, VCol, VBtn,VListItem,VList,VNavigationDrawer,VListGroup } from 'vuetify/components';
+  import { VApp, VAppBar, VToolbarTitle, VSpacer, VIcon, VMain, VContainer, VFooter, VCol, VBtn,VListItem,VList,VNavigationDrawer } from 'vuetify/components';
   import { useRouter } from 'vue-router';
   import { ref, onMounted, watch, watchEffect, nextTick,} from 'vue';
   const router = useRouter();
