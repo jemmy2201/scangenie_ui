@@ -20,7 +20,7 @@
                   <v-icon left>mdi-view-dashboard</v-icon>
                   Dashboard
               </v-list-item>
-              <v-list-item to="/" >
+              <v-list-item to="/list_document" >
                   <v-icon left>mdi-file</v-icon>
                   Documents
               </v-list-item>

@@ -8,7 +8,7 @@ import UserLogin from '../views/FormLogin.vue';
 import UploadData from '../views/extract_data/UploadData.vue';
 import ExtractData from '../views/extract_data/extract_data.vue';
 import HrmClaim from '../views/HrmClaim.vue';
-import VendorBill from '../views/VendorBill.vue';
+import ListDocument from '../views/Document/DocumentList.vue';
 
 // Definisi rute
 const routes = [
@@ -18,10 +18,10 @@ const routes = [
     { path: '/upload_data', component: UploadData, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
     { path: '/extract/data',name: 'ExtractData', component: ExtractData, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
     { path: '/hrm/claim', component: HrmClaim, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
-    { path: '/vendor/bill', component: VendorBill, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
     { path: '/reports', component: Reports, meta: { requiresAuth: true, roles: ['admin'] } },
     { path: '/settings', component: Settings, meta: { requiresAuth: true, roles: ['admin'] } },
     { path: '/profiles', component: Profiles, meta: { requiresAuth: true, roles: ['admin'] } },
+    { path: '/list_document', component: ListDocument, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
 ];
 
 const router = createRouter({
