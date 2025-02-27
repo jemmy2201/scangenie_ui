@@ -1,5 +1,8 @@
 <template>
     <v-container class="fill-height d-flex justify-center align-center">
+        <v-snackbar v-model="snackbar" :timeout="3000" color="success" location="top center">
+            {{ message }}
+        </v-snackbar>
         <v-card class="edit-card" elevation="10">
             <v-card-title class="text-center text-h5 font-weight-bold">Edit Uploaded Data</v-card-title>
             <v-card-text>
@@ -52,13 +55,15 @@
 
 <script setup>
     import { ref, onMounted } from 'vue';
-    import { useRoute } from 'vue-router';
-    import { VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText, VTextField } from 'vuetify/components';
-
+    import { useRoute,useRouter } from 'vue-router';
+    import api from '@/api/axios';
+    import { VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText, VTextField,VSnackbar } from 'vuetify/components';
+    const router = useRouter();
     const route = useRoute();
     // const router = useRouter();
     const invoices = ref([]);
-
+    const snackbar = ref(false);
+    const message = ref('');
     onMounted(() => {
         try {
             if (route.query.data) {
@@ -70,9 +75,36 @@
         }
     });
 
-    const saveChanges = () => {
-        console.log('Updated Invoices:', invoices.value);
-        // Implementasikan logika penyimpanan di sini
+    const saveChanges = async () => {
+        // console.log('Updated Invoices:', invoices.value);
+        try {
+            const payload = invoices.value.map(invoice => ({
+                filename: invoice.filename, // Pastikan filename ada
+                extracted_info: invoice.extracted_info.map(info => info.trim()) // Bersihkan whitespace
+            }));
+
+            // console.log('Sending Data:', payload);
+
+            const response = await api.post('/extract/save', payload, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            // console.log('Response:', response.data);
+            if (response.data.success) {
+                // Tampilkan notifikasi sukses
+                message.value = 'Data saved successfully!';
+                snackbar.value = true;
+                // Redirect ke halaman "upload_data" setelah sukses
+                setTimeout(() => {
+                    router.push('/upload_data');
+                }, 3000); // Delay 1 detik agar transisi lebih smooth
+            }
+        } catch (error) {
+            console.error('Error updating data:', error);
+            alert('Failed to update data!');
+        }
     };
 </script>
 
