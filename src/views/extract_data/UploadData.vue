@@ -40,7 +40,7 @@
         });
 
         try {
-            const response = await api.post('/upload', formData, {
+            const response = await api.post('/extract/upload', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
