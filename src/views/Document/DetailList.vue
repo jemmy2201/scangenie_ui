@@ -7,6 +7,7 @@
             <v-card-title class="text-center text-h5 font-weight-bold">Edit Uploaded Data</v-card-title>
             <v-card-text>
                 <template v-if="invoices.length">
+                    <v-row>
                         <v-col cols="12" v-for="(invoice, index) in invoices" :key="index">
                             <v-card class="mb-4" outlined>
                                 <v-card-title class="font-weight-bold">
@@ -27,8 +28,9 @@
                                 </v-card-text>
                             </v-card>
                         </v-col>
+                    </v-row>
                     <div class="d-flex justify-space-between align-center mt-4">
-                        <v-btn color="secondary" @click="saveChanges">
+                        <v-btn color="secondary" @click="backpage">
                             Back
                         </v-btn>
 
@@ -38,7 +40,7 @@
 <!--                        <v-btn color="primary" class="mx-2" @click="DialogPaymentMode = true">-->
 <!--                            Select Payment Mode-->
 <!--                        </v-btn>-->
-                        <v-btn color="red"  @click="saveChanges">
+                        <v-btn color="red" v-if="!hidePost" @click="saveChanges">
                             Post
                         </v-btn>
                     </div>
@@ -55,16 +57,20 @@
     import { ref, onMounted } from 'vue';
     import { useRoute,useRouter } from 'vue-router';
     import api from '@/api/axios';
-    import { VCol,VList,VListItem,VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText, VTextField,VSnackbar } from 'vuetify/components';
-
+    import { VCol,VList,VListItem, VBtn, VAlert, VContainer, VCard, VCardTitle, VCardText, VTextField,VSnackbar } from 'vuetify/components';
     const router = useRouter();
     const route = useRoute();
     // const router = useRouter();
     const invoices = ref([]);
     const snackbar = ref(false);
+    const hidePost = ref(false);
     const message = ref('');
     onMounted(() => {
         try {
+            console.log('jrg',route.query.aksi)
+            if (route.query.aksi == 1){
+                hidePost.value = true
+            }
             if (route.query.data) {
                 invoices.value = JSON.parse(route.query.data);
             }
@@ -73,7 +79,11 @@
             invoices.value = [];
         }
     });
-
+    const backpage = async () => {
+        router.push({
+            name: 'ListDocument',
+        });
+    };
     const saveChanges = async () => {
         // console.log('Updated Invoices:', invoices.value);
         try {
@@ -105,6 +115,19 @@
             alert('Failed to update data!');
         }
     };
+    // const LoadData = async (item) => {
+    //     try {
+    //         const response = await api.post("/extract/find", { id: item.id }); // Sesuaikan endpoint delete
+    //         if (response.data.success){
+    //
+    //         }
+    //
+    //     } catch (error) {
+    //         console.error("Error deleting data:", error);
+    //         snackbar.value.message = "Gagal menghapus data!";
+    //         snackbar.value.show = true;
+    //     }
+    // };
 </script>
 
 <style scoped>

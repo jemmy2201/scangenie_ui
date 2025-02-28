@@ -9,6 +9,7 @@ import UploadData from '../views/extract_data/UploadData.vue';
 import ExtractData from '../views/extract_data/extract_data.vue';
 import HrmClaim from '../views/HrmClaim.vue';
 import ListDocument from '../views/Document/DocumentList.vue';
+import DetailListDocument from '../views/Document/DetailList.vue';
 
 // Definisi rute
 const routes = [
@@ -21,7 +22,8 @@ const routes = [
     { path: '/reports', component: Reports, meta: { requiresAuth: true, roles: ['admin'] } },
     { path: '/settings', component: Settings, meta: { requiresAuth: true, roles: ['admin'] } },
     { path: '/profiles', component: Profiles, meta: { requiresAuth: true, roles: ['admin'] } },
-    { path: '/list_document', component: ListDocument, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
+    { path: '/list_document', name: 'ListDocument',component: ListDocument, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
+    { path: '/detail_list_document', name: 'DetailListDocument',component: DetailListDocument, meta: { requiresAuth: true, roles: ['admin', 'user'] } },
 ];
 
 const router = createRouter({
