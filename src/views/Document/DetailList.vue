@@ -67,7 +67,6 @@
     const message = ref('');
     onMounted(() => {
         try {
-            console.log('jrg',route.query.aksi)
             if (route.query.aksi == 1){
                 hidePost.value = true
             }
@@ -85,16 +84,17 @@
         });
     };
     const saveChanges = async () => {
-        // console.log('Updated Invoices:', invoices.value);
         try {
+            console.log('jrg',route.query.id)
             const payload = invoices.value.map(invoice => ({
+                id: route.query.id, // Pastikan filename ada
                 filename: invoice.filename, // Pastikan filename ada
                 extracted_info: invoice.extracted_info.map(info => info.trim()) // Bersihkan whitespace
             }));
 
-            // console.log('Sending Data:', payload);
+            console.log('Sending Data:', payload);
 
-            const response = await api.post('/extract/save', payload, {
+            const response = await api.post('/extract/update', payload, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -107,7 +107,7 @@
                 snackbar.value = true;
                 // Redirect ke halaman "upload_data" setelah sukses
                 setTimeout(() => {
-                    router.push('/upload_data');
+                    router.push('/list_document');
                 }, 3000); // Delay 1 detik agar transisi lebih smooth
             }
         } catch (error) {

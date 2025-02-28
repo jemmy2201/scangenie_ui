@@ -23,8 +23,9 @@
         </v-container>
 </template>
 
+
 <script setup>
-        import { ref, onMounted } from "vue";
+        import { ref, onMounted,computed  } from "vue";
         import api from "@/api/axios"; // Pastikan path benar
         import {  VSnackbar,VContainer,VDataTable, VIcon } from 'vuetify/components';
         import {useRouter} from "vue-router";
@@ -39,11 +40,10 @@
 
 
         // Header Tabel
-        const headers = [
-                { text: "Filename", key: "filename" },
-                { text: "Actions", key: "actions", sortable: false }
-        ];
-
+        const headers= computed(() => [
+                { title: "Filename", key: "filename" }, // Untuk Vuetify 3
+                { title: "Actions", key: "actions", sortable: false, align: "end" }
+        ]);
         // Data Items
         const items = ref([]);
 
@@ -51,7 +51,10 @@
         const fetchData = async () => {
                 try {
                         const response = await api.post("/extract/list"); // Sesuaikan URL API
+                        items.value = [];
+                        await new Promise(resolve => setTimeout(resolve, 100)); // Tambahkan delay
                         items.value = response.data.results;
+                        console.log("Updated Items:", items.value);
                 } catch (error) {
                         console.error("Error fetching data:", error);
                         snackbar.value.message = "Gagal mengambil data!";
@@ -59,7 +62,10 @@
                 }
         };
 
-        onMounted(fetchData); // Panggil saat komponen dimuat
+        onMounted(async () => {
+                await fetchData();
+                console.log("Fetched items:", items.value);
+        });
 
         // Fungsi untuk Melihat Data
         const viewItem  = async (item) => {
@@ -93,7 +99,6 @@
                 } catch (error) {
                         console.error("Error parsing extracted_info:", error);
                 }
-
                 // Bentuk data sesuai format yang diinginkan
                 const formattedData = [
                         {
@@ -103,7 +108,7 @@
                 ];
                 router.push({
                         name: 'DetailListDocument',
-                        query: { data: JSON.stringify(formattedData),aksi:2 }
+                        query: { data: JSON.stringify(formattedData),id:item.id,aksi:2 }
                 });
         };
 
